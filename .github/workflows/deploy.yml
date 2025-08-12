@@ -1,0 +1,35 @@
+name: Deploy a GitHub Pages con Token Personal
+
+on:
+  push:
+    branches:
+      - main  # o 'master', depende de tu rama principal
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar usuario de Git
+      run: |
+        git config --global user.name "kluiverttt"
+        git config --global user.email "kolopez@puce.edu.ec"
+
+    - name: Preparar archivos del sitio
+      run: |
+        mkdir public
+        cp index.html public/  
+
+    - name: Deploy a gh-pages con token personal
+      env:
+        TOKEN: ${{ secrets.GH_PAT3 }}  # Token guardado como secreto en GitHub
+      run: |
+        cd public
+        git init
+        git checkout -b gh-pages
+        git add .
+        git commit -m "Deploy desde Actions con token personal"
+        git push --force "https://x-access-token:${TOKEN}@github.com/kluiverttt/Parcial3ADSI" gh-pages
