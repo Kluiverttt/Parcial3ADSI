@@ -3,7 +3,7 @@ name: Deploy a GitHub Pages con Token Personal
 on:
   push:
     branches:
-      - main  # o 'master', depende de tu rama principal
+      - master  
 
 jobs:
   deploy:
